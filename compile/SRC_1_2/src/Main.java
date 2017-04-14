@@ -68,11 +68,9 @@ public class Main {
 		
 		if(!spass.equals("")) {
 			if(!sdigits.equals("")) {
-				if(!textra.equals("")) {
-					System.out.println("\nI: " + spass + "\nO: " + TerminalPassword(spass, Integer.parseInt(sdigits), (textra+",")));
-					return;
-				}
-			}	
+				System.out.println("\nI: " + spass + "\nO: " + TerminalPassword(spass, Integer.parseInt(sdigits), (textra+",")));
+				return;
+			}
 		}
 
         JFrame f = new JFrame("Uncrackable");
@@ -148,6 +146,10 @@ public class Main {
 	            	for(int i = 0; i < amountExtra; i++) {
 	        	        otherARGS = otherARGS + (extra[i].getText() + ",");
 	                }
+	            	
+	            	if(amountExtra == 0) {
+	            		otherARGS = ",";
+	            	}
             		
             		out.setText(TerminalPassword(new String(pass.getPassword()), getDigits, otherARGS));
             	
