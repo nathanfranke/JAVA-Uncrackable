@@ -100,7 +100,7 @@ public class Main {
         digits.setHorizontalAlignment(JTextField.CENTER);
         f.getContentPane().add(digits);
 
-        JLabel warndigits = new JLabel(whiteSpace(140) + "WARNING: Over 1000 digits may take over 10 seconds to complete!" + whiteSpace(140));
+        JLabel warndigits = new JLabel(whiteSpace(140) + "Est. Time: " + "0s" + whiteSpace(140));
         f.getContentPane().add(warndigits);
         
         extra = new JTextField[amountExtra];
@@ -160,6 +160,30 @@ public class Main {
             }
         });
         
+        while (true) {
+        	String time = whiteSpace(20) + "(Error)" + whiteSpace(20);
+        	try {
+        		int timeint = Integer.parseInt(digits.getText()) / 10000;
+        		time = ("Est. Time: " + timeint + "s");
+        		//if(timeint > 60) {
+        		//	time = ((timeint / 60) + "m");
+        		//}
+        		if(timeint > 60) {
+        			time = "Est. Time: " + ">5m" + "; " + Math.round(Integer.parseInt(digits.getText()) / 102.4) / 10.0 + "kb";
+        		}
+        		if(timeint >= 100) {
+        			time = "MEMORY LEAK; WILL NOT CALCULATE!";
+        			//I was having trouble having it work at all
+        		}
+        		if(Integer.parseInt(digits.getText()) > 4760) {
+        			time+=("; Numbers greater than 4760 will not render correctly");
+        		}
+        	} catch (Exception e) {
+        		
+        	}
+        	warndigits.setText(time);
+        }
+        
 	}
 	
 	public static String TerminalPassword (String password, int digits, String extra) {
@@ -170,13 +194,30 @@ public class Main {
     	
     	String[] finalChars = new String[digits];
     	
-    	for(int x = 0; x < digits; x++) {
-
+    	for (int i = 0; i < digits; i++) {
+    		
+    		/*if(currentHash < 1024) {
+    			currentHash = (otherARGS + digits + ":" + currentHash).hashCode();
+    		} else {
+    			currentHash = currentHash / 256;
+    		}*/ //Not working
+    		
     		currentHash = (otherARGS + digits + ":" + currentHash).hashCode();
     		
-    		int indexChar = Math.abs(currentHash) % 94 + 33;
+    		System.out.println("hash: " + currentHash);
     		
-    		finalChars[x] = Character.toString((char)indexChar);
+    		int indexChar = Math.abs(currentHash) % 94 + 33;
+
+    		finalChars[i] = Character.toString((char)indexChar);
+    		
+    		/*while (currentHash > 1024 && i < digits) {
+    			currentHash = currentHash / 256;
+    			System.out.println("hash2: " + currentHash);
+    			if(currentHash > 256) {
+    				i++;
+    	    		finalChars[i] = Character.toString((char)indexChar);
+    			}
+    		}*/ //Memory Leak
     		
     	}
     	
