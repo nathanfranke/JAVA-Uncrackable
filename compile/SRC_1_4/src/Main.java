@@ -194,6 +194,8 @@ public class Main {
     	
     	String[] finalChars = new String[digits];
     	
+    	String completeHash = "";
+    	
     	for (int i = 0; i < digits; i++) {
     		
     		/*if(currentHash < 1024) {
@@ -202,9 +204,10 @@ public class Main {
     			currentHash = currentHash / 256;
     		}*/ //Not working
     		
-    		currentHash = (otherARGS + digits + ":" + currentHash).hashCode();
+    		currentHash = (otherARGS + digits + ":" + currentHash + ";" + completeHash).hashCode();
     		
     		System.out.println("hash: " + currentHash);
+    		completeHash += currentHash;
     		
     		int indexChar = Math.abs(currentHash) % 94 + 33;
 
