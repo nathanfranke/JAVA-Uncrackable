@@ -207,7 +207,7 @@ public class Main {
     		currentHash = (otherARGS + digits + ":" + currentHash + ";" + completeHash).hashCode();
     		
     		System.out.println("hash: " + currentHash);
-    		completeHash += currentHash;
+    		completeHash += (currentHash % 10);
     		
     		int indexChar = Math.abs(currentHash) % 94 + 33;
 
