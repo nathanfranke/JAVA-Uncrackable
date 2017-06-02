@@ -160,7 +160,7 @@ public class Main {
             }
         });
         
-        while (true) {
+        while (f.isVisible()) {
         	String time = whiteSpace(20) + "(Error)" + whiteSpace(20);
         	try {
         		int timeint = Integer.parseInt(digits.getText()) / 10000;
@@ -184,6 +184,9 @@ public class Main {
         	warndigits.setText(time);
         }
         
+        System.out.print("Closed by user");
+        System.exit(0);
+        
 	}
 	
 	public static String TerminalPassword (String password, int digits, String extra) {
@@ -194,6 +197,8 @@ public class Main {
     	
     	String[] finalChars = new String[digits];
     	
+    	String completeHash = "";
+    	
     	for (int i = 0; i < digits; i++) {
     		
     		/*if(currentHash < 1024) {
@@ -202,9 +207,10 @@ public class Main {
     			currentHash = currentHash / 256;
     		}*/ //Not working
     		
-    		currentHash = (otherARGS + digits + ":" + currentHash).hashCode();
+    		currentHash = (otherARGS + digits + ":" + currentHash + ";" + completeHash).hashCode();
     		
     		System.out.println("hash: " + currentHash);
+    		completeHash += (currentHash % 10);
     		
     		int indexChar = Math.abs(currentHash) % 94 + 33;
 
